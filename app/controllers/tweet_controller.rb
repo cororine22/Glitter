@@ -9,6 +9,9 @@ class TweetController < ApplicationController
 
   def create
     @url = params[:url]
+
+    return until URI.regexp.match(@url)
+
     urlhtml = Nokogiri::HTML(open(@url))
 
     # issueのタイトルを取得しツイート内容に表示
