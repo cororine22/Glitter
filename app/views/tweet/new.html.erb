@@ -1,9 +1,11 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<div align="center">
+  <div class="form-group">
     <%= form_tag("/tweet/create") do %>
-        <p>URL</p>
-        <input name="url">
-        <input type="submit" value="ツイート" >
+        <div class="form-group">
+            <label>URL</label>
+            <input class="form-control" style="width:50%; margin-bottom:15px;" name="url">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Tweet" >
     <% end %>
-    </div>
+  </div>
 </div>
