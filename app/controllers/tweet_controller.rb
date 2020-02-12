@@ -8,7 +8,7 @@ class TweetController < ApplicationController
   end
 
   def create
-    @url = params[:url]
+    @url = "https://github.com/" + params[:url]
 
     return until URI.regexp.match(@url)
 

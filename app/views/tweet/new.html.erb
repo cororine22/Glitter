@@ -1,9 +1,8 @@
 <div align="center">
   <div class="form-group">
     <%= form_tag("/tweet/create") do %>
-        <div class="form-group">
-            <label>URL</label>
-            <input class="form-control" style="width:50%; margin-bottom:15px;" name="url">
+        <div class="form-group form-inline">
+            <label>https://github.com/</label><input class="form-control" style="width:20%; margin-bottom:15px;" name="url">
         </div>
         <input type="submit" class="btn btn-primary" value="Tweet" >
     <% end %>
