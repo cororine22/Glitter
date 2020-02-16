@@ -8,6 +8,13 @@ class TweetController < ApplicationController
 
   before_action :set_tweet, only: [:show, :edit, :update, :destroy, :confirm]
 
+  def show
+    # ③-1 投稿idをセット（idの有無をTwitterに表示させる画像を決める条件分岐に使用するため）
+    @tweet.id = params[:id]
+    # ③-2 showアクションが呼ばれた場合、new.html.erbを呼び出す
+    render :new
+  end
+  
   def new
   end
 
@@ -32,22 +39,18 @@ class TweetController < ApplicationController
 
     # idとして採番予定の数字を作成（現在作成しているidの次、存在しない場合は1を採番）
     if Tweet.last.present?
-      next_id = Tweet.last.id + 1
+      @tweet.id = Tweet.last.id + 1
     else
-      next_id = 1
+      @tweet.id = 1
     end
     # 画像の生成メソッド呼び出し（画像のファイル名にidを使うため、引数として渡す）
-    make_picture(next_id)
+    make_picture(@tweet.id)
     if @tweet.save
       # 確認画面へリダイレクト
       redirect_to confirm_path(@tweet)
     else
       render :new
     end
-
-    # query = URI.encode(@text + " " + "#Glitter")
-    # @search_url = query
-    # redirect_to("https://twitter.com/intent/tweet?text=#{@search_url}")
   end
 
   # confirmアクションを追加
@@ -132,12 +135,12 @@ class TweetController < ApplicationController
       case Rails.env
         when 'production'
           # バケットの指定・URLの設定
-          bucket = storage.directories.get('バケット名')
+          bucket = storage.directories.get('bootcamp-glitter')
           # 保存するディレクトリ、ファイル名の指定（ファイル名は投稿id.pngとしています）
           png_path = 'images/' + id.to_s + '.png'
           image_uri = image.path
           file = bucket.files.create(key: png_path, public: true, body: open(image_uri))
-          @tweet.picture = 'https://s3-ap-northeast-1.amazonaws.com/バケット名' + "/" + png_path
+          @tweet.image_url = 'https://s3-ap-northeast-1.amazonaws.com/bootcamp-glitter' + "/" + png_path
         when 'development'
           bucket = storage.directories.get('bootcamp-glitter')
           png_path = 'images/' + id.to_s + '.png'

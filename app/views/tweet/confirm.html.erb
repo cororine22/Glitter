@@ -4,9 +4,8 @@
   <%= image_tag @tweet.image_url, width: '315' %>
 </div>
 
-<h2>Step 3</h2>
-<!-- Twitter投稿へのリンク。herokuアプリを作成後追記する -->
-<a href="https://twitter.com/intent/tweet?text=<%= @tweet.image_url %>%20%23Glitter" target="_blank" class="square_btn" data-show-count="false">Twitter投稿へ</a>
+<!-- Twitter投稿へのリンク-->
+<a href="https://twitter.com/share?url=https://evening-shore-25523.herokuapp.com/tweet/<%= @tweet.id %>&hashtags=Glitter" target="_blank" class="square_btn" data-show-count="false">Twitter投稿へ</a>
 
 <div>
   <%= link_to "トップページへ", root_path %>
