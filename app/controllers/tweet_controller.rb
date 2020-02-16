@@ -51,10 +51,6 @@ class TweetController < ApplicationController
     else
       render :new
     end
-
-    # query = URI.encode(@text + " " + "#Glitter")
-    # @search_url = query
-    # redirect_to("https://twitter.com/intent/tweet?text=#{@search_url}")
   end
 
   # confirmアクションを追加
@@ -139,12 +135,12 @@ class TweetController < ApplicationController
       case Rails.env
         when 'production'
           # バケットの指定・URLの設定
-          bucket = storage.directories.get('バケット名')
+          bucket = storage.directories.get('bootcamp-glitter')
           # 保存するディレクトリ、ファイル名の指定（ファイル名は投稿id.pngとしています）
           png_path = 'images/' + id.to_s + '.png'
           image_uri = image.path
           file = bucket.files.create(key: png_path, public: true, body: open(image_uri))
-          @tweet.picture = 'https://s3-ap-northeast-1.amazonaws.com/バケット名' + "/" + png_path
+          @tweet.image_url = 'https://s3-ap-northeast-1.amazonaws.com/bootcamp-glitter' + "/" + png_path
         when 'development'
           bucket = storage.directories.get('bootcamp-glitter')
           png_path = 'images/' + id.to_s + '.png'
