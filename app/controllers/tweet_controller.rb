@@ -39,12 +39,12 @@ class TweetController < ApplicationController
 
     # idとして採番予定の数字を作成（現在作成しているidの次、存在しない場合は1を採番）
     if Tweet.last.present?
-      next_id = Tweet.last.id + 1
+      @tweet.id = Tweet.last.id + 1
     else
-      next_id = 1
+      @tweet.id = 1
     end
     # 画像の生成メソッド呼び出し（画像のファイル名にidを使うため、引数として渡す）
-    make_picture(next_id)
+    make_picture(@tweet.id)
     if @tweet.save
       # 確認画面へリダイレクト
       redirect_to confirm_path(@tweet)
