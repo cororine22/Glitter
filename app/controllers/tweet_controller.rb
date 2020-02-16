@@ -8,6 +8,13 @@ class TweetController < ApplicationController
 
   before_action :set_tweet, only: [:show, :edit, :update, :destroy, :confirm]
 
+  def show
+    # ③-1 投稿idをセット（idの有無をTwitterに表示させる画像を決める条件分岐に使用するため）
+    @tweet.id = params[:id]
+    # ③-2 showアクションが呼ばれた場合、new.html.erbを呼び出す
+    render :new
+  end
+  
   def new
   end
 
