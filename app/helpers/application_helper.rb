@@ -3,8 +3,8 @@ module ApplicationHelper
       twitter_card = {}
       if tweet.present?
         if tweet.id.present?
-          twitter_card[:url] = "https://evening-shore-25523.herokuapp.com/tweet/#{tweet.id}"
-          twitter_card[:image] = "https://s3-ap-northeast-1.amazonaws.com/bootcamp-glitter/images/#{tweet.id}.png"
+          twitter_card[:url] = tweet.repository_url
+          twitter_card[:image] = tweet.image_url
         else
           twitter_card[:url] = 'https://evening-shore-25523.herokuapp.com/'
           twitter_card[:image] = "https://raw.githubusercontent.com/ysk1180/bigtutorial/master/app/assets/images/top.png"
