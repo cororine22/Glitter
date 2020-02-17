@@ -6,7 +6,8 @@ require "net/http"
 
 class TweetController < ApplicationController
 
-  before_action :set_tweet, only: [:show, :edit, :update, :destroy, :confirm]
+  before_action :set_tweet, only: [:edit, :update, :destroy, :confirm]
+  before_action :set_your_tweet, only: [:show]
 
   def show
     render :new
@@ -63,6 +64,10 @@ class TweetController < ApplicationController
 
     def set_tweet
       @tweet = Tweet.find(params[:id])
+    end
+
+    def set_your_tweet
+      @your_tweet = Tweet.find(params[:id])
     end
 
     def make_picture(id)

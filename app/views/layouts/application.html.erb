@@ -6,12 +6,15 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <% twitter_card = get_twitter_card_info(@tweet ? @tweet : nil) %>
-    <meta name="twitter:card" content=<%=twitter_card[:card]%> />
-    <meta property="og:url" content=<%=twitter_card[:url]%> />
-    <meta property="og:title" content=<%=twitter_card[:title]%> />
-    <meta property="og:description" content=<%=twitter_card[:description]%> />
-    <meta property="og:image" content=<%=twitter_card[:image]%> />
+    <% if !@your_tweet.nil? %>
+      <% twitter_card = get_twitter_card_info(@your_tweet ? @your_tweet : nil) %>
+      <meta name="twitter:card" content=<%=twitter_card[:card]%> />
+      <meta property="og:url" content=<%=twitter_card[:url]%> />
+      <meta property="og:title" content=<%=twitter_card[:title]%> />
+      <meta property="og:description" content=<%=twitter_card[:description]%> />
+      <meta property="og:image" content=<%=twitter_card[:image]%> />
+      <meta http-equiv="refresh" content=" 0; url=<%=twitter_card[:url]%>">
+    <% end %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
