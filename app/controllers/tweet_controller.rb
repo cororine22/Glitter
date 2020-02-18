@@ -77,36 +77,36 @@ class TweetController < ApplicationController
       # contentの文字数に応じて条件分岐
       if content.length <= 28 then
         # 28文字以下の場合は7文字毎に改行
-        n = (content.length / 7).floor + 1
+        n = (content.length / 16).floor + 1
         n.times do |i|
-          s_num = i * 7
-          f_num = s_num + 6
+          s_num = i * 16
+          f_num = s_num + 15
           range =  Range.new(s_num,f_num)
           sentense += content.slice(range)
           sentense += "\n" if n != i+1
         end
         # 文字サイズの指定
-        pointsize = 90
+        pointsize = 70
       elsif content.length <= 50 then
-        n = (content.length / 10).floor + 1
+        n = (content.length / 20).floor + 1
         n.times do |i|
-          s_num = i * 10
-          f_num = s_num + 9
+          s_num = i * 20
+          f_num = s_num + 19
           range =  Range.new(s_num,f_num)
           sentense += content.slice(range)
           sentense += "\n" if n != i+1
         end
         pointsize = 60
       else
-        n = (content.length / 15).floor + 1
+        n = (content.length / 25).floor + 1
         n.times do |i|
-          s_num = i * 15
-          f_num = s_num + 14
+          s_num = i * 25
+          f_num = s_num + 24
           range =  Range.new(s_num,f_num)
           sentense += content.slice(range)
           sentense += "\n" if n != i+1
         end
-        pointsize = 45
+        pointsize = 55
       end
       # 文字色の指定
       color = "white"
@@ -116,7 +116,7 @@ class TweetController < ApplicationController
       font = ".fonts/GenEiGothicN-black.jpgU-KL.otf"
       # ↑これらの項目も文字サイズのように背景画像や文字数によって変えることができます
       # 選択された背景画像の設定
-      base = "app/assets/images/black.jpg"
+      base = "app/assets/images/green.jpg"
       # minimagickを使って選択した画像を開き、作成した文字を指定した条件通りに挿入している
       image = MiniMagick::Image.open(base)
       image.combine_options do |i|
