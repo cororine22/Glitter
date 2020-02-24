@@ -14,6 +14,10 @@ class TweetController < ApplicationController
   end
   
   def new
+    return if params[:url].nil?
+    splitURLs = params[:url].split("github.com/")
+    return if splitURLs.count != 2
+    @chrome_url = splitURLs.last
   end
 
   def create
