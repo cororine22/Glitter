@@ -1,4 +1,6 @@
 class Tweet < ApplicationRecord
+  validates :repository_url, length: { maximum: 50 }
+  validates :image_url, length: { maximum: 100 }
   after_initialize :set_default, if: :new_record?
 
   private

@@ -21,7 +21,7 @@ class TweetController < ApplicationController
   end
 
   def create
-    @url = "https://github.com/" + params[:url]
+    @url = "https://github.com/" + params[:url].strip
 
     # TODO: ユーザにダイアログ表示
     return until URI.regexp.match(@url) && working_url?(@url)
@@ -61,17 +61,17 @@ class TweetController < ApplicationController
 
   private
     def working_url?(url_str)
-      return open(@url).status.last == "OK"
+      return open(url_str).status.last == "OK"
     rescue
       false
     end
 
     def set_tweet
-      @tweet = Tweet.find(params[:id])
+      @tweet = Tweet.where(id: params[:id])&.first
     end
 
     def set_your_tweet
-      @your_tweet = Tweet.find(params[:id])
+      @your_tweet = Tweet.where(id: params[:id])&.first
     end
 
     def make_picture(id)
