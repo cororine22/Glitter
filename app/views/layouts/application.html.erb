@@ -14,11 +14,17 @@
       <meta property="og:description" content=<%=twitter_card[:description]%> />
       <meta property="og:image" content=<%=twitter_card[:image]%> />
       <meta http-equiv="refresh" content=" 0; url=<%=twitter_card[:url]%>">
+    <% else %>
+      <script type="text/javascript">
+        window.onload = function() {
+          document.body.style.visibility="visible";
+        };
+      </script>
     <% end %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body style="visibility:hidden" >
     <div style="margin-top: 50px; margin-bottom:15px;">
     <img src="/assets/logoM.png" class="center-block">
     </div>
