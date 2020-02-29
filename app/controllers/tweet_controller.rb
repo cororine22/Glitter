@@ -8,6 +8,7 @@ class TweetController < ApplicationController
 
   before_action :set_tweet, only: [:edit, :update, :destroy, :confirm]
   before_action :set_your_tweet, only: [:show]
+  before_action :set_errors, only: [:new, :create, :show]
 
   def show
     render :new
@@ -21,10 +22,19 @@ class TweetController < ApplicationController
   end
 
   def create
+    if params[:url].blank?
+      @errors.push "URLを入力してください"
+      render :new
+      return
+    end
+
     @url = "https://github.com/" + params[:url].strip
 
-    # TODO: ユーザにダイアログ表示
-    return until URI.regexp.match(@url) && working_url?(@url)
+    unless URI.regexp.match(@url) && working_url?(@url)
+      @errors.push "有効なURLではありません"
+      render :new
+      return
+    end
 
     urlhtml = Nokogiri::HTML(open(@url))
 
@@ -33,8 +43,11 @@ class TweetController < ApplicationController
       @text = (elements.xpath('.//span').text).gsub(/\r\n|\r|\n|\s|\t/, "")
     end
 
-    # TODO: ユーザにダイアログ表示
-    return if @text.nil?
+    if @text.nil?
+      @errors.push "issueの内容が取得できません"
+      render :new
+      return
+    end
 
     # @textを使ってTweetを作成
     @tweet = Tweet.new(content: @text, repository_url: @url)
@@ -51,6 +64,7 @@ class TweetController < ApplicationController
       # 確認画面へリダイレクト
       redirect_to confirm_path(@tweet)
     else
+      @errors.push "データベースで予期せぬエラーが発生しました"
       render :new
     end
   end
@@ -63,7 +77,11 @@ class TweetController < ApplicationController
     def working_url?(url_str)
       return open(url_str).status.last == "OK"
     rescue
-      false
+      return false
+    end
+
+    def set_errors
+      @errors = []
     end
 
     def set_tweet
