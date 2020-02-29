@@ -7,5 +7,6 @@ module ApplicationHelper
       twitter_card[:title] = "Glitter"
       twitter_card[:card] = 'summary_large_image'
       twitter_card[:description] = tweet.repository_url
+      twitter_card
     end
   end
